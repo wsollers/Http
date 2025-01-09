@@ -13,10 +13,10 @@ int main (int argc, char *argv[]) {
     struct Hello hello;
     printf("Client started %s\n", hello.value);
 
-    HttpRequest<Protocol::HTTP1_1> request1("http://example.com");
+    HttpRequest<Protocol::HTTP1_1, Method::GET> request1("http://example.com");
     request1.printRequest();
 
-    HttpRequest<Protocol::HTTP2> request2("http://example.org", 443);
+    HttpRequest<Protocol::HTTP2, Method::POST> request2("http://example.org", 443);
     request2.printRequest();
 
 

@@ -31,19 +31,36 @@ constexpr std::string_view getProtocolString(Protocol protocol) {
         case Protocol::HTTP2: return "HTTP/2";
         case Protocol::HTTP3: return "HTTP/3";
     }
-    return "Unknown Protocol";
+    return "Unknown Protocol"; //Toss Exception?
 }
+
+enum class Method { GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH, TRACE, CONNECT };
+constexpr std::string_view getMethodString(Method method) {
+    switch (method) {
+        case Method::GET: return "GET";
+        case Method::POST: return "POST";
+        case Method::PUT: return "PUT";
+        case Method::DELETE: return "DELETE";
+        case Method::HEAD: return "HEAD";
+        case Method::OPTIONS: return "OPTIONS";
+        case Method::PATCH: return "PATCH";
+        case Method::TRACE: return "TRACE";
+        case Method::CONNECT: return "CONNECT";
+    }
+    return "Unknown Method"; //Exception?
+}
+
 
 // Template class for HttpRequest
 template
-<Protocol ProtocolType>
+<Protocol ProtocolType, Method MethodType>
 class HttpRequest {
 public:
     explicit HttpRequest(const std::string &url, int port = 443) : url(url), port(port) {}
 
     void printRequest() const {
         std::cout << "Requesting " << url << " using protocol " << getProtocolString(ProtocolType) <<
-            " " << port << std::endl;
+            " " << port << " with method " << getMethodString(MethodType) << std::endl;
     }
 
 private:
