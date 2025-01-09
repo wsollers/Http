@@ -16,12 +16,10 @@ int main (int argc, char *argv[]) {
     HttpRequest<Protocol::HTTP1_1> request1("http://example.com");
     request1.printRequest();
 
-    HttpRequest<Protocol::HTTP2> request2("http://example.org");
+    HttpRequest<Protocol::HTTP2> request2("http://example.org", 443);
     request2.printRequest();
 
 
     exit(EXIT_SUCCESS);
-
-
 
 }
