@@ -10,8 +10,10 @@ name: 'Dependency Review'
 on: [pull_request]
 
 permissions:
+  security-events: write
+  actions: read
   contents: read
-
+  
 jobs:
   dependency-review:
     runs-on: ubuntu-latest
