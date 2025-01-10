@@ -13,12 +13,13 @@ int main (int argc, char *argv[]) {
     struct Hello hello;
     printf("Client started %s\n", hello.value);
 
-    HttpRequest<Protocol::HTTP1_1, Method::GET> request1("http://example.com");
+    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request1("http://example.com", 80);
     request1.printRequest();
 
-    HttpRequest<Protocol::HTTP2, Method::POST> request2("http://example.org", 443);
+    Http::Request<Http::Transport::TLS, Http::Protocol::HTTP2, Http::Method::POST> request2("http://example.org", 443);
     request2.printRequest();
 
+    testOpenTlsSocket();
 
     exit(EXIT_SUCCESS);
 
