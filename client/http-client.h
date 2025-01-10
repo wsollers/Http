@@ -7,6 +7,8 @@
 
 #include <iostream>
 
+//inline void testOpenTlsSocket(){}
+
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #include <openssl/bio.h>
