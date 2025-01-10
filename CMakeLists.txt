@@ -62,10 +62,10 @@ add_executable(Http main.cpp)
 add_executable(http-client client/http-client.cpp client/http-client.h
         common/http.h)
 find_package(LibreSSL REQUIRED)
-target_link_libraries(http-client PRIVATE common LibreSSL::TLS)
+target_link_libraries(http-client PRIVATE common LibreSSL::TLS libcmt)
 
 add_executable(http-server server/http-server.cpp server/http-server.h
         common/http.h)
 find_package(LibreSSL REQUIRED)
-target_link_libraries(http-server PRIVATE common LibreSSL::TLS)
+target_link_libraries(http-server PRIVATE common LibreSSL::TLS libcmt)
 
