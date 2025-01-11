@@ -52,6 +52,7 @@ add_executable(Http main.cpp)
 
 add_executable(http-client client/http-client.cpp client/http-client.h
   client/http-client-win64.h client/http-client-linux.h
+  ${CMAKE_BINARY_DIR}/include/tls.h
   common/http.h)
 
 
