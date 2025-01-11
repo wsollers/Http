@@ -18,8 +18,8 @@ int main (int argc, char *argv[]) {
 
     Http::Request<Http::Transport::TLS, Http::Protocol::HTTP2, Http::Method::POST> request2("http://example.org", 443);
     request2.printRequest();
-
-    testOpenTlsSocket();
+    printSupportedCurves();
+    createTLSSocket("cnn.com", "443");
 
     exit(EXIT_SUCCESS);
 
