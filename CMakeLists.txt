@@ -22,7 +22,25 @@ if (MINGW)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -static-libgcc -static-libstdc++")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++")
 endif()
+if(WIN32 AND CMAKE_SIZEOF_VOID_P EQUAL 8)
+    message(STATUS "Cross-compiling for Windows 64-bit")
+FetchContent_Declare(
+        libressl
+        #URL https://github.com/libressl/portable/releases/download/v4.0.0/libressl-4.0.0.tar.gz 
+        #BINARY_DIR     ${CMAKE_BINARY_DIR}/custom/libressl-build       
+        URL https://github.com/libressl/portable/releases/download/v4.0.0/libressl_v4.0.0_windows_x64.zip
 
+)
+else()
+message(STATUS "Cross-compiling for Linux 64-bit")
+FetchContent_Declare(
+        libressl
+        URL https://github.com/libressl/portable/releases/download/v4.0.0/libressl-4.0.0.tar.gz 
+        #BINARY_DIR     ${CMAKE_BINARY_DIR}/custom/libressl-build       
+        #URL https://github.com/libressl/portable/releases/download/v4.0.0/libressl_v4.0.0_windows_x64.zip
+
+)
+endif()
 
 FetchContent_Declare(
         libressl
