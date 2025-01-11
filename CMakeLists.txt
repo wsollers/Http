@@ -73,6 +73,12 @@ target_link_libraries(http-client PRIVATE common)
 target_link_libraries(http-client PRIVATE 
   tls ssl crypto
 )
+if(WIN32 AND CMAKE_SIZEOF_VOID_P EQUAL 8)
+    message(STATUS "Building for Windows 64-bit")
+    target_link_libraries(http-client PRIVATE ws2_32 bcrypt)
+else()
+    message(STATUS "Not a Windows 64-bit build; skipping bcrypt linking")
+endif()
 add_dependencies(http-client libressl)
 
 add_executable(http-server server/http-server.cpp server/http-server.h
@@ -85,6 +91,12 @@ target_link_libraries(http-server PRIVATE common)
 target_link_libraries(http-server PRIVATE 
   tls ssl crypto
 )
+if(WIN32 AND CMAKE_SIZEOF_VOID_P EQUAL 8)
+    message(STATUS "Building for Windows 64-bit")
+    target_link_libraries(http-server PRIVATE ws2_32 bcrypt)
+else()
+    message(STATUS "Not a Windows 64-bit build; skipping bcrypt linking")
+endif()
 add_dependencies(http-server libressl)
 
 
