@@ -55,7 +55,8 @@ add_executable(Http main.cpp)
 
 
 add_executable(http-client client/http-client.cpp client/http-client.h
-        common/http.h)
+  client/http-client-win64.h client/http-client-linux.h
+  common/http.h)
 
 
 target_include_directories(common PRIVATE ${CMAKE_BINARY_DIR}/include)

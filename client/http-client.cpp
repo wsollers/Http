@@ -1,6 +1,13 @@
 //
 // Created by wsoll on 1/9/2025.
 //
+
+#ifdef __linux__
+    #pragma message("__linux__ is defined")
+#else
+    #pragma message("__linux__ is not defined")
+#endif
+
 #include <cstdlib>
 #include <cstdio>
 
@@ -18,7 +25,7 @@ int main (int argc, char *argv[]) {
 
     Http::Request<Http::Transport::TLS, Http::Protocol::HTTP2, Http::Method::POST> request2("http://example.org", 443);
     request2.printRequest();
-    printSupportedCurves();
+    //printSupportedCurves();
     createTLSSocket("cnn.com", "443");
 
     exit(EXIT_SUCCESS);
