@@ -10,23 +10,19 @@ set(LIBRESSL_ROOT_DIR "${CMAKE_BINARY_DIR}/_deps/libressl-src")
 include(FetchContent)
 
 if(WIN32 AND CMAKE_SIZEOF_VOID_P EQUAL 8)
-    message(STATUS "Cross-compiling for Windows 64-bit")
+  message(STATUS "Compiling for Windows 64-bit")
   FetchContent_Declare(
         libressl
-        #URL https://github.com/libressl/portable/releases/download/v4.0.0/libressl-4.0.0.tar.gz 
-        #BINARY_DIR     ${CMAKE_BINARY_DIR}/custom/libressl-build       
+        BINARY_DIR     ${CMAKE_BINARY_DIR}/lib       
         URL https://github.com/libressl/portable/releases/download/v4.0.0/libressl_v4.0.0_windows_x64.zip
-
-)
+  )
 else()
-message(STATUS "Cross-compiling for Linux 64-bit")
-FetchContent_Declare(
+  message(STATUS "Compiling for Linux 64-bit")
+  FetchContent_Declare(
         libressl
         URL https://github.com/libressl/portable/releases/download/v4.0.0/libressl-4.0.0.tar.gz 
-        #BINARY_DIR     ${CMAKE_BINARY_DIR}/custom/libressl-build       
-        #URL https://github.com/libressl/portable/releases/download/v4.0.0/libressl_v4.0.0_windows_x64.zip
-
-)
+        BINARY_DIR     ${CMAKE_BINARY_DIR}/lib       
+  )
 endif()
 
 FetchContent_MakeAvailable(libressl)
