@@ -58,7 +58,7 @@ add_executable(http-client client/http-client.cpp client/http-client.h
 target_include_directories(http-client PRIVATE ${CMAKE_BINARY_DIR}/include)
 target_link_libraries(http-client PRIVATE common)
 target_link_libraries(http-client PRIVATE tls )
-
+add_dependencies(http-client Libressl)
 
 add_executable(http-server server/http-server.cpp server/http-server.h
         common/http.h)
