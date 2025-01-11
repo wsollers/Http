@@ -8,25 +8,40 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake;${CMAKE_MODULE_PATH}")
 set(LIBRESSL_ROOT_DIR "${CMAKE_BINARY_DIR}/_deps/libressl-src")
 
 include(FetchContent)
+include(ExternalProject)
 
 if(WIN32 AND CMAKE_SIZEOF_VOID_P EQUAL 8)
   message(STATUS "Compiling for Windows 64-bit")
-  FetchContent_Declare(
-        libressl
-        BINARY_DIR     ${CMAKE_BINARY_DIR}/lib       
-        URL https://github.com/libressl/portable/releases/download/v4.0.0/libressl_v4.0.0_windows_x64.zip
+  
+  ExternalProject_Add(
+      libressl
+      PREFIX ${CMAKE_BINARY_DIR}/libressl
+      URL https://github.com/libressl/portable/releases/download/v4.0.0/libressl_v4.0.0_windows_x64.zip
+      #URL_HASH SHA256=<your_hash_here> # Optional: Add a valid hash for verification
+      SOURCE_DIR ${CMAKE_BINARY_DIR}/libressl-src
+      BINARY_DIR ${CMAKE_BINARY_DIR}/libressl-build
+      CONFIGURE_COMMAND "" # Not needed for precompiled binaries
+      BUILD_COMMAND ""     # No build step since it's a precompiled binary
+      INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory 
+          ${CMAKE_BINARY_DIR}/libressl-src 
+          ${CMAKE_BINARY_DIR}/libressl-install
   )
+
 else()
   message(STATUS "Compiling for Linux 64-bit")
-  FetchContent_Declare(
-        libressl
-        URL https://github.com/libressl/portable/releases/download/v4.0.0/libressl-4.0.0.tar.gz 
-        BINARY_DIR     ${CMAKE_BINARY_DIR}/lib       
+
+  ExternalProject_Add(
+      libressl
+      PREFIX ${CMAKE_BINARY_DIR}/libressl
+      URL https://github.com/libressl/portable/releases/download/v4.0.0/libressl-4.0.0.tar.gz
+      #URL_HASH SHA256=<your_hash_here> # Optional: Add a valid hash for verification
+      SOURCE_DIR ${CMAKE_BINARY_DIR}/libressl-src
+      BINARY_DIR ${CMAKE_BINARY_DIR}/libressl-build
+      CMAKE_ARGS
+          -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/libressl-install
+          -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
   )
 endif()
-
-FetchContent_MakeAvailable(libressl)
-
 
 FetchContent_Declare(
         googletest
@@ -43,9 +58,6 @@ add_library(common STATIC ${PROJECT_SOURCE_DIR}/common
         common/common.cpp)
 
 target_include_directories(common PUBLIC ${PROJECT_SOURCE_DIR}/ ${PROJECT_SOURCE_DIR}/common)
-target_include_directories(common PRIVATE ${CMAKE_BINARY_DIR}/include)
-#add_dependencies(common Build_LibreSSL)
-
 
 add_executable(Http main.cpp)
 
@@ -53,17 +65,27 @@ add_executable(Http main.cpp)
 add_executable(http-client client/http-client.cpp client/http-client.h
   client/http-client-win64.h client/http-client-linux.h
   common/http.h)
-
-
-target_include_directories(http-client PRIVATE ${CMAKE_BINARY_DIR}/include)
+target_include_directories(http-client PRIVATE ${CMAKE_BINARY_DIR}/libressl-install/include)
+target_link_directories(http-client PRIVATE
+      ${CMAKE_BINARY_DIR}/libressl-install/lib
+)
 target_link_libraries(http-client PRIVATE common)
-target_link_libraries(http-client PRIVATE tls )
-add_dependencies(http-client Libressl)
+target_link_libraries(http-client PRIVATE 
+  tls ssl crypto
+)
+add_dependencies(http-client libressl)
 
 add_executable(http-server server/http-server.cpp server/http-server.h
         common/http.h)
-target_include_directories(common PRIVATE ${CMAKE_BINARY_DIR}/include)
-target_link_libraries(http-server PRIVATE common tls)
+target_include_directories(http-server PRIVATE ${CMAKE_BINARY_DIR}/libressl-install/include)
+target_link_directories(http-server PRIVATE
+      ${CMAKE_BINARY_DIR}/libressl-install/lib
+)
+target_link_libraries(http-server PRIVATE common)
+target_link_libraries(http-server PRIVATE 
+  tls ssl crypto
+)
+add_dependencies(http-server libressl)
 
 
 
