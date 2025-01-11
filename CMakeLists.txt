@@ -52,11 +52,10 @@ add_executable(Http main.cpp)
 
 add_executable(http-client client/http-client.cpp client/http-client.h
   client/http-client-win64.h client/http-client-linux.h
-  ${CMAKE_BINARY_DIR}/include/tls.h
   common/http.h)
 
 
-target_include_directories(common PRIVATE ${CMAKE_BINARY_DIR}/include)
+target_include_directories(http-client PRIVATE ${CMAKE_BINARY_DIR}/include)
 target_link_libraries(http-client PRIVATE common)
 target_link_libraries(http-client PRIVATE tls )
 
