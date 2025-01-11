@@ -85,8 +85,7 @@ jobs:
       if: ${{ matrix.build-mode == 'manual' }}
       shell: bash
       run: |
-        chmod +x codeqlBuildScript.sh
-        ./codeqlBuildScript.sh
+        sh ./codeqlBuildScript.sh
         
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
