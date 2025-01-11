@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake;${CMAKE_MODULE_PATH}")
 
-set(LIBRESSL_ROOT_DIR "${CMAKE_BINARY_DIR}/lib")
+set(LIBRESSL_ROOT_DIR "${CMAKE_BINARY_DIR}/_deps/libressl-src")
 
 include(FetchContent)
 
