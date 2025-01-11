@@ -8,6 +8,10 @@ on:
   schedule:
     - cron: '0 0 * * *'
 
+env:
+  # Path to the CMake build directory.
+  build: '${{ github.workspace }}/build'
+  
 jobs:
   analyze:
     name: Analyze
@@ -33,16 +37,21 @@ jobs:
 
       - name: Install dependencies
         run: |
+          echo "Installing dependencies..."
           sudo apt-get update
           sudo apt-get install -y build-essential cmake
 
-      - name: Build
+      - name: Configure CMake
         run: |
-          echo "Starting a CMake configure and build..."
-          mkdir build
-          cd build
-          cmake ..
-          cmake --build .
+          echo "Starting a CMake configure..."
+          cmake -B ${{ env.build }}
+
+      # Build is not required unless generated source files are used
+      - name: Build CMake
+        run: |
+          echo "Starting a build..."
+          cmake --build ${{ env.build }}
+
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
