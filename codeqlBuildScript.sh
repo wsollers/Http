@@ -3,6 +3,6 @@
 
 echo "Building for CodeQL"
 mkdir build
-cd build
+cd build || exit
 cmake --build .
 
