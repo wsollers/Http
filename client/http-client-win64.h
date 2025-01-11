@@ -1,11 +1,18 @@
 #ifndef HTTP_CLIENT_WIN64_H
 #define HTTP_CLIENT_WIN64_H
 
+// Windows-specific implementation of HTTP client using libtls
+// This implementation uses the Windows Sockets API (Winsock) to create a TCP socket
+// and then uses libtls to establish a secure connection over TLS.
 #if defined(_WIN64) || defined(_WIN32)
 
 #include <iostream>
 #include <cstring>
+#include <stdexcept>
+#include <string>
+
 #include <tls.h>
+
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
