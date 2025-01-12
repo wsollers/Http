@@ -64,7 +64,7 @@ add_executable(Http main.cpp)
 
 add_executable(http-client client/http-client.cpp client/http-client.h
   client/http-client-win64.h client/http-client-linux.h
-  common/http.h)
+  common/http.h common/include/ContentTypes.h common/include/HttpBase.h)
 target_include_directories(http-client PRIVATE ${CMAKE_BINARY_DIR}/libressl-install/include)
 target_link_directories(http-client PRIVATE
       ${CMAKE_BINARY_DIR}/libressl-install/lib
@@ -81,8 +81,15 @@ else()
 endif()
 add_dependencies(http-client libressl)
 
+
+
+
+
+
+
+
 add_executable(http-server server/http-server.cpp server/http-server.h
-        common/http.h)
+    common/http.h common/include/ContentTypes.h common/include/HttpBase.h)
 target_include_directories(http-server PRIVATE ${CMAKE_BINARY_DIR}/libressl-install/include)
 target_link_directories(http-server PRIVATE
       ${CMAKE_BINARY_DIR}/libressl-install/lib
