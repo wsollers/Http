@@ -10,7 +10,7 @@
 
 [![Scorecard supply-chain security](https://github.com/wsollers/Http/actions/workflows/scorecard.yml/badge.svg)](https://github.com/wsollers/Http/actions/workflows/scorecard.yml)
 
-
+[![Code Coverage](https://github.com/wsollers/Http/actions/workflows/code-coverage.yml/badge.svg)](https://github.com/wsollers/Http/actions/workflows/code-coverage.yml)
 
 
 
