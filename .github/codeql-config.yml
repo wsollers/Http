@@ -1,0 +1,5 @@
+name: "CodeQL Configuration"
+paths-ignore:
+  - 'cmake_build/**'
+  - '${{ github.workspace }}/build/**'
+
