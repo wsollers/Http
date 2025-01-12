@@ -15,7 +15,7 @@ cd build && ctest
 
 # Generate coverage report
 lcov --capture --directory . --output-file coverage.info --ignore-errors mismatch,empty
-lcov --remove coverage.info '/usr/*' --output-file coverage.filtered.info
+lcov --remove coverage.info '/usr/*' 'gtest/*' --output-file coverage.filtered.info
 genhtml coverage.filtered.info --output-directory coverage_html
 
 # Open coverage report

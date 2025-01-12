@@ -1,0 +1,51 @@
+name: Code Coverage
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the code
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # Set up dependencies
+    - name: Install Dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y lcov
+
+    # Build the project with coverage flags
+    - name: Build with Coverage
+      run: |
+        cmake -DCMAKE_BUILD_TYPE=Debug -B build
+        cmake --build build
+
+    # Run tests
+    - name: Run Tests
+      run: |
+        cd build
+        ctest --output-on-failure
+
+    # Generate coverage report
+    - name: Generate Coverage Report
+      run: |
+        lcov --capture --directory build --output-file coverage.info
+        lcov --remove coverage.info '/usr/*' 'gtest/*' --output-file coverage.filtered.info
+        genhtml coverage.filtered.info --output-directory coverage_html
+
+    # Upload to Codecov
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: coverage.filtered.info
+        flags: unittests
+        name: code-coverage
+        fail_ci_if_error: true
+
