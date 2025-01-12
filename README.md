@@ -13,7 +13,7 @@
 [![Code Coverage](https://github.com/wsollers/Http/actions/workflows/code-coverage.yml/badge.svg)](https://github.com/wsollers/Http/actions/workflows/code-coverage.yml)
 
 
-
+Code Coverage: https://app.codecov.io/gh/wsollers/Http
 
 
 Simple HTTP client and server written in c++
