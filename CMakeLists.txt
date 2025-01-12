@@ -10,6 +10,8 @@ set(LIBRESSL_ROOT_DIR "${CMAKE_BINARY_DIR}/_deps/libressl-src")
 include(FetchContent)
 include(ExternalProject)
 
+
+
 if(WIN32 AND CMAKE_SIZEOF_VOID_P EQUAL 8)
   message(STATUS "Compiling for Windows 64-bit")
   
@@ -44,7 +46,7 @@ else()
 endif()
 
 
-find_package(LibreSSL)
+#find_package(LibreSSL)
 
 add_library(common STATIC ${PROJECT_SOURCE_DIR}/common
         common/common.cpp)
