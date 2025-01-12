@@ -43,14 +43,6 @@ else()
   )
 endif()
 
-FetchContent_Declare(
-        googletest
-        URL https://github.com/google/googletest/releases/download/v1.15.2/googletest-1.15.2.tar.gz
-)
-FetchContent_MakeAvailable(googletest)
-
-
- #   add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
 
 find_package(LibreSSL)
 
@@ -108,7 +100,13 @@ add_dependencies(http-server libressl)
 
 
 
+option(ENABLE_TESTS "Enable building of tests" ON)
 
+if(ENABLE_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
+#cmake -DENABLE_TESTS=OFF ..
 
 
 
