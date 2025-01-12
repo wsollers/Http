@@ -67,6 +67,7 @@ jobs:
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
+        cleanup: true
         paths-ignore: |
           build/**
           **libressl**
