@@ -14,7 +14,7 @@
 
 [![codecov](https://codecov.io/gh/wsollers/Http/branch/master/graph/badge.svg?token=8YMQBRIEGO)](https://codecov.io/gh/wsollers/Http)
 
-https://codecov.io/gh/wsollers/Http/graphs/sunburst.svg?token=8YMQBRIEGO
+
 
 Code Coverage: https://app.codecov.io/gh/wsollers/Http
 
