@@ -16,6 +16,8 @@ FetchContent_MakeAvailable(googletest)
 # Enable testing
 enable_testing()
 
+
+
 add_test(NAME HttpTests COMMAND httptests)
 
 add_executable(httptests httptests.cpp 
@@ -38,3 +40,18 @@ else()
 endif()
 add_dependencies(httptests libressl)
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        message(STATUS "Code coverage is enabled GNU|Clang.")
+        # Enable coverage flags for GCC and Clang
+        target_compile_options(httptests PRIVATE -g --coverage)
+        target_link_options(httptests PRIVATE --coverage)
+    elseif(MSVC)
+    message(STATUS "Code coverage is enabled MSVC.")
+        # Enable code coverage for MSVC
+        target_compile_options(httptests PRIVATE /DEBUG /COVERAGE)
+        target_link_options(httptests PRIVATE /DEBUG /COVERAGE)
+    else()
+        message(WARNING "Code coverage is not supported for this compiler.")
+    endif()
+endif()

@@ -7,14 +7,14 @@ cd .. || exit
 rm -rf build
 
 # Build with coverage flags
-cmake -DCMAKE_BUILD_TYPE=Debug -B build
+cmake -DCMAKE_CXX_FLAGS="-O0" -DCMAKE_BUILD_TYPE=Debug -B build
 cmake --build build
 
 # Run tests
 cd build && ctest
 
 # Generate coverage report
-lcov --capture --directory . --output-file coverage.info
+lcov --capture --directory . --output-file coverage.info --ignore-errors mismatch,empty
 lcov --remove coverage.info '/usr/*' --output-file coverage.filtered.info
 genhtml coverage.filtered.info --output-directory coverage_html
 
