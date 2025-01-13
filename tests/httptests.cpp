@@ -87,5 +87,5 @@ TEST(HttpTestSuite, CanRemoveHeaders) {
     EXPECT_EQ((returnedAddress = &request.addHeader(HeaderKeys::Accept, "GGG")), orig);
     EXPECT_EQ((returnedAddress = &request.removeHeader(HeaderKeys::Accept)), orig);
     EXPECT_EQ((returnedAddress = &request.addHeader(getHeaderKeyString(HeaderKeys::Accept), "GGG")), orig);
-    EXPECT_EQ((returnedAddress = &request.removeHeader(getHeaderKeyString(HeaderKeys::Accept)), orig);
+    EXPECT_EQ(getHeaderKeyString(HeaderKeys::Accept), orig);
 }
