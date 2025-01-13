@@ -14,7 +14,7 @@
 
 [![codecov](https://codecov.io/gh/wsollers/Http/branch/master/graph/badge.svg?token=8YMQBRIEGO)](https://codecov.io/gh/wsollers/Http)
 
-
+[![OSV-Scanner](https://github.com/wsollers/Http/actions/workflows/osv-scanner.yml/badge.svg)](https://github.com/wsollers/Http/actions/workflows/osv-scanner.yml)
 
 Code Coverage: https://app.codecov.io/gh/wsollers/Http
 
