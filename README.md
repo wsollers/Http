@@ -17,6 +17,7 @@
 
 
 Code Coverage: https://app.codecov.io/gh/wsollers/Http
-Snyk https://app.snyk.io/org/wsollers/projects
+
+Snyk: https://app.snyk.io/org/wsollers/projects
 
 Simple HTTP client and server written in c++
