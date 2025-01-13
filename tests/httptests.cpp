@@ -32,3 +32,29 @@ TEST(GetMethodStringTest, ReturnsExpectedStrings) {
     EXPECT_EQ(Http::getMethodString(Http::Method::TRACE), "TRACE");
     EXPECT_EQ(Http::getMethodString(Http::Method::CONNECT), "CONNECT");
 }
+
+// Unit Test for getHeaderKeyString
+TEST(GetHeaderKeyStringTest, ReturnsCorrectString) {
+    using namespace Http;
+
+    // Test known headers
+    EXPECT_EQ(getHeaderKeyString(HeaderKeys::Accept), "Accept");
+    EXPECT_EQ(getHeaderKeyString(HeaderKeys::ContentType), "Content-Type");
+    EXPECT_EQ(getHeaderKeyString(HeaderKeys::Authorization), "Authorization");
+    EXPECT_EQ(getHeaderKeyString(HeaderKeys::UserAgent), "User-Agent");
+    EXPECT_EQ(getHeaderKeyString(HeaderKeys::Host), "Host");
+
+    // Test Unknown header
+    EXPECT_EQ(getHeaderKeyString(HeaderKeys::Unknown), "Unknown");
+}
+
+// Additional Test to Ensure No Unexpected Results
+TEST(GetHeaderKeyStringTest, HandlesAllKnownHeaders) {
+    using namespace Http;
+
+    EXPECT_EQ(getHeaderKeyString(HeaderKeys::AcceptEncoding), "Accept-Encoding");
+    EXPECT_EQ(getHeaderKeyString(HeaderKeys::ContentLength), "Content-Length");
+    EXPECT_EQ(getHeaderKeyString(HeaderKeys::Referer), "Referer");
+    EXPECT_EQ(getHeaderKeyString(HeaderKeys::CacheControl), "Cache-Control");
+    EXPECT_EQ(getHeaderKeyString(HeaderKeys::Connection), "Connection");
+}
