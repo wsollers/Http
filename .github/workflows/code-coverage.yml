@@ -46,6 +46,7 @@ jobs:
       uses: codecov/codecov-action@v3
       with:
         files: coverage.filtered.info
+        token: ${{ secrets.CODECOV_TOKEN }} # Use the repository secret
         flags: unittests
         name: code-coverage
         fail_ci_if_error: true
