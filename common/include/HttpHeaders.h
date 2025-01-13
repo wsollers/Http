@@ -6,7 +6,7 @@
 
 namespace Http {
 
-    using Headers = std::unordered_map<std::string, std::string>;
+    using Headers = std::unordered_map<std::string_view, std::string_view>;
 
     // Enum class for HeaderKeys
 enum class HeaderKeys {

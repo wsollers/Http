@@ -6,9 +6,12 @@
 
 #include "http-server.h"
 
+
+
 int main (int argc, char *argv[]) {
 
     printf("Server started\n");
+
 
     exit(EXIT_SUCCESS);
  }

@@ -6,11 +6,11 @@
 #define HTTPBASE_H
 
 #include <iostream>
-#include <array>
 #include <string_view>
 #include <string>
 #include <cstdint>
-#include <unordered_map>
+
+#include "HttpHeaders.h"
 
 namespace Http {
     enum class Transport { HTTP, TLS };
@@ -51,12 +51,14 @@ namespace Http {
         return "Unknown Method"; //Exception?
     }
 
-
+    constexpr std::string_view USER_AGENT { "https://github.com/wsollers/Http/README.md"};
     // Template class for HttpRequest
     template
     <Transport TransportType, Protocol ProtocolType, Method MethodType>
     class Request {
     public:
+        using RequestType = Request<TransportType, ProtocolType, MethodType>;
+
         explicit Request(const std::string &url, int port = 443) : url(url), port(port) {}
 
         void printRequest() const {
@@ -65,9 +67,17 @@ namespace Http {
                 " with transport: " << getTransportString(TransportType)<< std::endl;
         }
 
+        RequestType& addHeader(const std::string &key, const std::string &value) { return *this; }
+        RequestType& removeHeader(const std::string &key) {return *this;}
+        RequestType& removeAllHeaders() {return *this;}
+
+        void printRequestHeaders() const {}
+
     private:
         std::string url;
         uint16_t port;
+
+        Http::Headers headers;
     };
 } //namespace http
 #endif //HTTPBASE_H

@@ -58,3 +58,15 @@ TEST(GetHeaderKeyStringTest, HandlesAllKnownHeaders) {
     EXPECT_EQ(getHeaderKeyString(HeaderKeys::CacheControl), "Cache-Control");
     EXPECT_EQ(getHeaderKeyString(HeaderKeys::Connection), "Connection");
 }
+
+// Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request1("http://example.com", 80);
+TEST(HeaderMutations, CanAddHeaders) {
+    using namespace Http;
+    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);
+
+    EXPECT_EQ(request.addHeader(HeaderKeys::Accept, HeaderValues::Accept), request);
+
+
+    EXPECT_EQ(getHeaderKeyString(HeaderKeys::AcceptEncoding), "Accept-Encoding");
+
+}
