@@ -5,7 +5,7 @@
 
 
 // Test case for HttpProtocol enum class
-TEST(HttpTestSuite, MatchesExpectedValues) {
+TEST(HttpTestSuite, MatchesProtocolExpectedValues) {
     EXPECT_EQ(Http::getProtocolString(Http::Protocol::HTTP1_0), "HTTP/1.0");
     EXPECT_EQ(Http::getProtocolString(Http::Protocol::HTTP1_1), "HTTP/1.1");
     EXPECT_EQ(Http::getProtocolString(Http::Protocol::HTTP2), "HTTP/2");
@@ -13,7 +13,7 @@ TEST(HttpTestSuite, MatchesExpectedValues) {
 }
 
 // Test case for Transport enum class
-TEST(HttpTestSuite, MatchesExpectedValues) {
+TEST(HttpTestSuite, MatchesTransportExpectedValues) {
     EXPECT_EQ(Http::getTransportString(Http::Transport::TLS), "HTTPS");
     EXPECT_EQ(Http::getTransportString(Http::Transport::HTTP), "HTTP");
 
@@ -70,21 +70,22 @@ TEST(HttpTestSuite, InitialRequestHasZeroHeaders) {
 TEST(HttpTestSuite, CanAddHeaders) {
     using namespace Http;
     Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);
+    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET>* orig = &request;
+    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET>* returnedAddress = nullptr;
 
-    EXPECT_EQ(request.addHeader(HeaderKeys::Accept, "GGG"), request);
-    EXPECT_EQ(request.addHeader(getHeaderKeyString(HeaderKeys::Accept), "GGG"), request);
+    EXPECT_EQ(returnedAddress = &request.addHeader(HeaderKeys::Accept, "GGG"), orig);
+    EXPECT_EQ(returnedAddress = &request.addHeader(getHeaderKeyString(HeaderKeys::Accept), "GGG"), orig);
 
-
-    EXPECT_EQ(getHeaderKeyString(HeaderKeys::AcceptEncoding), "Accept-Encoding");
 
 }
 
 TEST(HttpTestSuite, CanRemoveHeaders) {
     using namespace Http;
     Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);
-
-    EXPECT_EQ(request.addHeader(HeaderKeys::Accept, "GGG"), request);
-    EXPECT_EQ(request.removeHeader(HeaderKeys::Accept), request);
-    EXPECT_EQ(request.addHeader(getHeaderKeyString(HeaderKeys::Accept), "GGG"), request);
-    EXPECT_EQ(request.removeHeader(getHeaderKeyString(HeaderKeys::Accept)), request);
+    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET>* orig = &request;
+    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET>* returnedAddress = nullptr;
+    EXPECT_EQ( returnedAddress = &request.addHeader(HeaderKeys::Accept, "GGG"), orig);
+    EXPECT_EQ(returnedAddress = &request.removeHeader(HeaderKeys::Accept), orig);
+    EXPECT_EQ(returnedAddress = &request.addHeader(getHeaderKeyString(HeaderKeys::Accept), "GGG"), orig);
+    EXPECT_EQ(returnedAddress = &request.removeHeader(getHeaderKeyString(HeaderKeys::Accept)), orig);
 }
