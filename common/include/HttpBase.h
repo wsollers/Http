@@ -68,7 +68,9 @@ namespace Http {
         }
 
         RequestType& addHeader(const std::string_view &key, const std::string_view &value) { return *this; }
-        RequestType& removeHeader(const std::string_view &key) {return *this;}
+        RequestType& addHeader(Http::HeaderKeys key, const std::string_view &value) { return *this; }
+        RequestType& removeHeader(const std::string_view &key) { return *this; }
+        RequestType& removeHeader(Http::HeaderKeys key) { return *this; }
         RequestType& removeAllHeaders() { headers.clear(); return *this;}
         size_t getHeaderCount() const { return headers.size(); }
 
