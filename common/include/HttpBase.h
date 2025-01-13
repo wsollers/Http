@@ -67,9 +67,10 @@ namespace Http {
                 " with transport: " << getTransportString(TransportType)<< std::endl;
         }
 
-        RequestType& addHeader(const std::string &key, const std::string &value) { return *this; }
-        RequestType& removeHeader(const std::string &key) {return *this;}
-        RequestType& removeAllHeaders() {return *this;}
+        RequestType& addHeader(const std::string_view &key, const std::string_view &value) { return *this; }
+        RequestType& removeHeader(const std::string_view &key) {return *this;}
+        RequestType& removeAllHeaders() { headers.clear(); return *this;}
+        size_t getHeaderCount() const { return headers.size(); }
 
         void printRequestHeaders() const {}
 

@@ -5,7 +5,7 @@
 
 
 // Test case for HttpProtocol enum class
-TEST(HttpProtocolTest, MatchesExpectedValues) {
+TEST(HttpTestSuite, MatchesExpectedValues) {
     EXPECT_EQ(Http::getProtocolString(Http::Protocol::HTTP1_0), "HTTP/1.0");
     EXPECT_EQ(Http::getProtocolString(Http::Protocol::HTTP1_1), "HTTP/1.1");
     EXPECT_EQ(Http::getProtocolString(Http::Protocol::HTTP2), "HTTP/2");
@@ -13,14 +13,14 @@ TEST(HttpProtocolTest, MatchesExpectedValues) {
 }
 
 // Test case for Transport enum class
-TEST(HttpTransportTest, MatchesExpectedValues) {
+TEST(HttpTestSuite, MatchesExpectedValues) {
     EXPECT_EQ(Http::getTransportString(Http::Transport::TLS), "HTTPS");
     EXPECT_EQ(Http::getTransportString(Http::Transport::HTTP), "HTTP");
 
 }
 
 // Unit Test for getMethodString
-TEST(GetMethodStringTest, ReturnsExpectedStrings) {
+TEST(HttpTestSuite, ReturnsExpectedStrings) {
     // Test all enum values
     EXPECT_EQ(Http::getMethodString(Http::Method::GET), "GET");
     EXPECT_EQ(Http::getMethodString(Http::Method::POST), "POST");
@@ -34,7 +34,7 @@ TEST(GetMethodStringTest, ReturnsExpectedStrings) {
 }
 
 // Unit Test for getHeaderKeyString
-TEST(GetHeaderKeyStringTest, ReturnsCorrectString) {
+TEST(HttpTestSuite, ReturnsCorrectString) {
     using namespace Http;
 
     // Test known headers
@@ -49,7 +49,7 @@ TEST(GetHeaderKeyStringTest, ReturnsCorrectString) {
 }
 
 // Additional Test to Ensure No Unexpected Results
-TEST(GetHeaderKeyStringTest, HandlesAllKnownHeaders) {
+TEST(HttpTestSuite, HandlesAllKnownHeaders) {
     using namespace Http;
 
     EXPECT_EQ(getHeaderKeyString(HeaderKeys::AcceptEncoding), "Accept-Encoding");
@@ -59,12 +59,19 @@ TEST(GetHeaderKeyStringTest, HandlesAllKnownHeaders) {
     EXPECT_EQ(getHeaderKeyString(HeaderKeys::Connection), "Connection");
 }
 
+TEST(HttpTestSuite, InitialRequestHasZeroHeaders) {
+    using namespace Http;
+    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);
+    EXPECT_EQ(request.getHeaderCount(), size_t(0));
+}
+
+
 // Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request1("http://example.com", 80);
-TEST(HeaderMutations, CanAddHeaders) {
+TEST(HttpTestSuite, CanAddHeaders) {
     using namespace Http;
     Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);
 
-    EXPECT_EQ(request.addHeader(HeaderKeys::Accept, HeaderValues::Accept), request);
+    EXPECT_EQ(request.addHeader(HeaderKeys::Accept, HeaderKeys::Accept), request);
 
 
     EXPECT_EQ(getHeaderKeyString(HeaderKeys::AcceptEncoding), "Accept-Encoding");
