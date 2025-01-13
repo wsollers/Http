@@ -3,6 +3,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
     message(WARNING "GoogleTest should not be built in Release mode!")
 endif()
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 # Add GoogleTest
 FetchContent_Declare(
         googletest
@@ -56,7 +57,8 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     endif()
 endif()
 
-# Function to enable sanitizers and handle suppression files
+
+    # Function to enable sanitizers and handle suppression files
 function(enable_sanitizers target)
     message(STATUS "Enabling sanitizers for ${target}")
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
@@ -78,6 +80,8 @@ function(enable_sanitizers target)
         if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.13")
             target_compile_options(${target} PRIVATE /fsanitize=address /Zi)
             target_link_options(${target} PRIVATE /fsanitize=address /DEBUG)
+            target_compile_options(googletest PRIVATE /fsanitize=address /Zi)
+            target_link_options(googletest PRIVATE /fsanitize=address /DEBUG)
         else()
             message(WARNING "Sanitizers are not supported for this version of MSVC")
         endif()
@@ -88,9 +92,10 @@ function(enable_sanitizers target)
   )
 endfunction()
 
+
 enable_sanitizers(httptests)
 
 
-
+endif()
 
 
