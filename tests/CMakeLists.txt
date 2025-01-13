@@ -55,3 +55,42 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         message(WARNING "Code coverage is not supported for this compiler.")
     endif()
 endif()
+
+# Function to enable sanitizers and handle suppression files
+function(enable_sanitizers target)
+    message(STATUS "Enabling sanitizers for ${target}")
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        # Enable sanitizers
+        message(STATUS "Sanitizers are enabled for GCC|Clang ${target}")
+        target_compile_options(${target} PRIVATE -fsanitize=address,undefined)
+        target_link_options(${target} PRIVATE -fsanitize=address,undefined)
+
+        # Add suppression file based on compiler version
+        if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 11)
+          #target_link_options(${target} PRIVATE -fsanitize-ignorelist=${CMAKE_SOURCE_DIR}/tests/suppressions.txt)
+        elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 12)
+          target_link_options(${target} PRIVATE -fsanitize-ignorelist=${CMAKE_SOURCE_DIR}/tests/suppressions.txt)
+        else()
+          #target_link_options(${target} PRIVATE -fsanitize-ignorelist=${CMAKE_SOURCE_DIR}/tests/suppressions.txt)
+        endif()
+    elseif(MSVC)
+        message(STATUS "Sanitizers are enabled for MSVC ${target}")
+        if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.13")
+            target_compile_options(${target} PRIVATE /fsanitize=address /Zi)
+            target_link_options(${target} PRIVATE /fsanitize=address /DEBUG)
+        else()
+            message(WARNING "Sanitizers are not supported for this version of MSVC")
+        endif()
+    endif()
+  # Set environment variables for sanitizers
+  set_tests_properties(HttpTests PROPERTIES
+    ENVIRONMENT "ASAN_OPTIONS=suppressions=${CMAKE_SOURCE_DIR}/tests/suppressions.txt;UBSAN_OPTIONS=suppressions=${CMAKE_SOURCE_DIR}/tests/suppressions.txt"
+  )
+endfunction()
+
+enable_sanitizers(httptests)
+
+
+
+
+

@@ -22,17 +22,9 @@ namespace Http {
         }
         return "Unknown Transport"; //Toss Exception?
     }
-    // Map protocols to their string views
-    /*
-    const std::unordered_map<Protocol, std::string_view> ProtocolStrings{
-        {Protocol::HTTP1_0, "HTTP/1.0"},
-        {Protocol::HTTP1_1, "HTTP/1.1"},
-        {Protocol::HTTP2, "HTTP/2"},
-        {Protocol::HTTP3, "HTTP/3"}
-    };
-    */
     enum class Protocol { HTTP1_0, HTTP1_1, HTTP2, HTTP3 };
 
+    // Map protocols to their string views
     constexpr std::string_view getProtocolString(Protocol protocol) {
         switch (protocol) {
             case Protocol::HTTP1_0: return "HTTP/1.0";
