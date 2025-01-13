@@ -71,9 +71,20 @@ TEST(HttpTestSuite, CanAddHeaders) {
     using namespace Http;
     Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);
 
-    EXPECT_EQ(request.addHeader(HeaderKeys::Accept, HeaderKeys::Accept), request);
+    EXPECT_EQ(request.addHeader(HeaderKeys::Accept, "GGG"), request);
+    EXPECT_EQ(request.addHeader(getHeaderKeyString(HeaderKeys::Accept), "GGG"), request);
 
 
     EXPECT_EQ(getHeaderKeyString(HeaderKeys::AcceptEncoding), "Accept-Encoding");
 
+}
+
+TEST(HttpTestSuite, CanRemoveHeaders) {
+    using namespace Http;
+    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);
+
+    EXPECT_EQ(request.addHeader(HeaderKeys::Accept, "GGG"), request);
+    EXPECT_EQ(request.removeHeader(HeaderKeys::Accept), request);
+    EXPECT_EQ(request.addHeader(getHeaderKeyString(HeaderKeys::Accept), "GGG"), request);
+    EXPECT_EQ(request.removeHeader(getHeaderKeyString(HeaderKeys::Accept)), request);
 }
