@@ -73,8 +73,8 @@ TEST(HttpTestSuite, CanAddHeaders) {
     Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET>* orig = &request;
     Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET>* returnedAddress = nullptr;
 
-    EXPECT_EQ(returnedAddress = &request.addHeader(HeaderKeys::Accept, "GGG"), orig);
-    EXPECT_EQ(returnedAddress = &request.addHeader(getHeaderKeyString(HeaderKeys::Accept), "GGG"), orig);
+    EXPECT_EQ((returnedAddress = &request.addHeader(HeaderKeys::Accept, "GGG")), orig);
+    EXPECT_EQ((returnedAddress = &request.addHeader(getHeaderKeyString(HeaderKeys::Accept), "GGG")), orig);
 
 
 }
@@ -84,8 +84,8 @@ TEST(HttpTestSuite, CanRemoveHeaders) {
     Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);
     Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET>* orig = &request;
     Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET>* returnedAddress = nullptr;
-    EXPECT_EQ( returnedAddress = &request.addHeader(HeaderKeys::Accept, "GGG"), orig);
-    EXPECT_EQ(returnedAddress = &request.removeHeader(HeaderKeys::Accept), orig);
-    EXPECT_EQ(returnedAddress = &request.addHeader(getHeaderKeyString(HeaderKeys::Accept), "GGG"), orig);
-    EXPECT_EQ(returnedAddress = &request.removeHeader(getHeaderKeyString(HeaderKeys::Accept)), orig);
+    EXPECT_EQ((returnedAddress = &request.addHeader(HeaderKeys::Accept, "GGG")), orig);
+    EXPECT_EQ((returnedAddress = &request.removeHeader(HeaderKeys::Accept)), orig);
+    EXPECT_EQ((returnedAddress = &request.addHeader(getHeaderKeyString(HeaderKeys::Accept), "GGG")), orig);
+    EXPECT_EQ((returnedAddress = &request.removeHeader(getHeaderKeyString(HeaderKeys::Accept)), orig);
 }
