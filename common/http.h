@@ -46,7 +46,7 @@ struct Sender<Http::Transport::HTTP, Http::Protocol::HTTP1_1> {
 
 class Client {
 public:
-  Client(Http::Transport transport, Http::Protocol protocol)
+  Client(const Http::Transport transport, const Http::Protocol protocol)
       : transport(transport), protocol(protocol){};
 
   virtual ~Client() = default;

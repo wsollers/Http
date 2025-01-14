@@ -61,30 +61,30 @@ TEST(HttpTestSuite, HandlesAllKnownHeaders) {
 
 TEST(HttpTestSuite, InitialRequestHasZeroHeaders) {
     using namespace Http;
-    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);
+    Http::Request request("http://example.com", 80);
     EXPECT_EQ(request.getHeaderCount(), size_t(0));
 }
 
 
 TEST(HttpTestSuite, CanAddHeader) {
     using namespace Http;
-    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);
+    Http::Request request(Http::Method::GET, "http://example.com", 80);
     EXPECT_EQ(request.getHeaderCount(), 1);
 }
 TEST(HttpTestSuite, CanAddHeaders) {
     using namespace Http;
-    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);
-    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET>* orig = &request;
-    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET>* returnedAddress = nullptr;
+    Http::Request request(Http::Method::GET, "http://example.com", 80);
+    Http::Request* orig = &request;
+    Http::Request* returnedAddress = nullptr;
     returnedAddress = &request.addHeader(HeaderKeys::Accept, "GGG");
     EXPECT_EQ(returnedAddress, orig);
 }
 
 TEST(HttpTestSuite, CanRemoveHeaders) {
     using namespace Http;
-    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);
-    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET>* orig = &request;
-    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET>* returnedAddress = &request.addHeader(HeaderKeys::Accept, "GGG");
+    Http::Request request(Http::Method::GET, "http://example.com", 80);
+    Http::Request* orig = &request;
+    Http::Request* returnedAddress = &request.addHeader(HeaderKeys::Accept, "GGG");
     returnedAddress = &request.removeHeader(HeaderKeys::Accept);
     EXPECT_EQ(returnedAddress, orig);
 }

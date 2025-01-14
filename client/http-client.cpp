@@ -23,6 +23,10 @@ int main (int argc, char *argv[]) {
     //printSupportedCurves();
     createTLSSocket("cnn.com", "443");
 
+
+    Http::Client client(Http::Transport::TLS, Http::Protocol::HTTP1_0);
+
+
     exit(EXIT_SUCCESS);
 
 }
