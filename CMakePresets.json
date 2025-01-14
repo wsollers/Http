@@ -4,57 +4,133 @@
     {
       "name": "default",
       "description": "Default configuration",
-      "generator": "Ninja Multi-Config",
-      "binaryDir": "${sourceDir}/build",
+      "hidden": true
+    },
+    {
+      "name": "linux-debug",
+      "description": "Linux Debug configuration",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/linux/debug",
       "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_CXX_STANDARD": "23"
       }
     },
     {
-      "name": "debug",
-      "description": "Debug configuration",
-      "generator": "Ninja Multi-Config",
-      "binaryDir": "${sourceDir}/build",
+      "name": "linux-debug-tests",
+      "description": "Linux Debug configuration with tests",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/linux/debug-tests",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "ENABLE_TESTS": "OFF"
-      }
-    },
-    {
-      "name": "debug-and-test",
-      "description": "Debug configuration with tests",
-      "generator": "Ninja Multi-Config",
-      "binaryDir": "${sourceDir}/build",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_STANDARD": "23",
         "ENABLE_TESTS": "ON"
       }
     },
     {
-      "name": "release",
-      "description": "Release configuration",
-      "generator": "Ninja Multi-Config",
-      "binaryDir": "${sourceDir}/build",
+      "name": "linux-release",
+      "description": "Linux Release configuration",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/linux/release",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_STANDARD": "23"
+      }
+    },
+    {
+      "name": "linux-release-tests",
+      "description": "Linux Release configuration with tests",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/linux/release-tests",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_STANDARD": "23",
+        "ENABLE_TESTS": "ON"
+      }
+    },
+    {
+      "name": "windows-debug",
+      "description": "Windows Debug configuration",
+      "generator": "Visual Studio 16 2019",
+      "binaryDir": "${sourceDir}/build/windows/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_STANDARD": "23"
+      }
+    },
+    {
+      "name": "windows-debug-tests",
+      "description": "Windows Debug configuration with tests",
+      "generator": "Visual Studio 16 2019",
+      "binaryDir": "${sourceDir}/build/windows/debug-tests",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_STANDARD": "23",
+        "ENABLE_TESTS": "ON"
+      }
+    },
+    {
+      "name": "windows-release",
+      "description": "Windows Release configuration",
+      "generator": "Visual Studio 16 2019",
+      "binaryDir": "${sourceDir}/build/windows/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_STANDARD": "23"
+      }
+    },
+    {
+      "name": "windows-release-tests",
+      "description": "Windows Release configuration with tests",
+      "generator": "Visual Studio 16 2019",
+      "binaryDir": "${sourceDir}/build/windows/release-tests",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_STANDARD": "23",
+        "ENABLE_TESTS": "ON"
       }
     }
   ],
   "buildPresets": [
     {
-      "name": "debug",
-      "configurePreset": "debug",
-      "description": "Debug build"
+      "name": "linux-debug-build",
+      "configurePreset": "linux-debug",
+      "description": "Linux Debug build"
     },
     {
-      "name": "debug-and-test",
-      "configurePreset": "debug-and-test",
-      "description": "Debug build with tests"
+      "name": "linux-debug-tests-build",
+      "configurePreset": "linux-debug-tests",
+      "description": "Linux Debug build with tests"
     },
     {
-      "name": "release",
-      "configurePreset": "release",
-      "description": "Release build"
+      "name": "linux-release-build",
+      "configurePreset": "linux-release",
+      "description": "Linux Release build"
+    },
+    {
+      "name": "linux-release-tests-build",
+      "configurePreset": "linux-release-tests",
+      "description": "Linux Release build with tests"
+    },
+    {
+      "name": "windows-debug-build",
+      "configurePreset": "windows-debug",
+      "description": "Windows Debug build"
+    },
+    {
+      "name": "windows-debug-tests-build",
+      "configurePreset": "windows-debug-tests",
+      "description": "Windows Debug build with tests"
+    },
+    {
+      "name": "windows-release-build",
+      "configurePreset": "windows-release",
+      "description": "Windows Release build"
+    },
+    {
+      "name": "windows-release-tests-build",
+      "configurePreset": "windows-release-tests",
+      "description": "Windows Release build with tests"
     }
   ]
 }
