@@ -76,6 +76,7 @@ add_executable(Http main.cpp)
 
 add_executable(http-client client/http-client.cpp client/http-client.h
         client/http-client-win64.h client/http-client-linux.h
+        common/http.cpp
         common/http.h common/include/ContentTypes.h common/include/HttpBase.h)
 target_include_directories(http-client PRIVATE ${CMAKE_BINARY_DIR}/libressl-install/include)
 target_link_directories(http-client PRIVATE
@@ -95,22 +96,24 @@ add_dependencies(http-client libressl)
 
 
 add_executable(http-server server/http-server.cpp server/http-server.h
-        common/http.h common/include/ContentTypes.h common/include/HttpBase.h)
+        common/http.cpp
+        common/http.h common/include/ContentTypes.h common/include/HttpBase.h
+)
 target_include_directories(http-server PRIVATE ${CMAKE_BINARY_DIR}/libressl-install/include)
 target_link_directories(http-server PRIVATE
-        ${CMAKE_BINARY_DIR}/libressl-install/lib
+${CMAKE_BINARY_DIR}/libressl-install/lib
 )
 target_link_libraries(http-server PRIVATE common)
 target_link_libraries(http-server PRIVATE
-        tls ssl crypto
+tls ssl crypto
 )
 
 
 if (WIN32 AND CMAKE_SIZEOF_VOID_P EQUAL 8)
-    message(STATUS "Building for Windows 64-bit")
-    target_link_libraries(http-server PRIVATE ws2_32 bcrypt)
+message(STATUS "Building for Windows 64-bit")
+target_link_libraries(http-server PRIVATE ws2_32 bcrypt)
 else ()
-    message(STATUS "Not a Windows 64-bit build; skipping bcrypt linking")
+message(STATUS "Not a Windows 64-bit build; skipping bcrypt linking")
 endif ()
 add_dependencies(http-server libressl)
 
@@ -118,8 +121,8 @@ add_dependencies(http-server libressl)
 option(ENABLE_TESTS "Enable building of tests" ON)
 
 if (ENABLE_TESTS)
-    enable_testing()
-    add_subdirectory(tests)
+enable_testing()
+add_subdirectory(tests)
 endif ()
 #cmake -DENABLE_TESTS=OFF ..
 
@@ -128,10 +131,10 @@ endif ()
 message(STATUS "Include directories:")
 get_property(INCLUDE_DIRS DIRECTORY PROPERTY INCLUDE_DIRECTORIES)
 foreach (INCLUDE_DIR ${INCLUDE_DIRS})
-    message(STATUS "${INCLUDE_DIR}")
+message(STATUS "${INCLUDE_DIR}")
 endforeach ()
 # Output the link directories message(STATUS "Link directories:")
 get_property(LINK_DIRS TARGET Http PROPERTY LINK_DIRECTORIES)
 foreach (LINK_DIR ${LINK_DIRS})
-    message(STATUS)
+message(STATUS)
 endforeach ()

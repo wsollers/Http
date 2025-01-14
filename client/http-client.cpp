@@ -24,7 +24,9 @@ int main (int argc, char *argv[]) {
     createTLSSocket("cnn.com", "443");
 
 
-    Http::Client client(Http::Transport::TLS, Http::Protocol::HTTP1_0);
+    Http::Client client(Http::Transport::TLS, Http::Protocol::HTTP1_0); //Decide on transport and proto first
+    const Http::Request request (Http::Method::GET, "cnn.com", 443);
+    client.sendRequest(request);;
 
 
     exit(EXIT_SUCCESS);
