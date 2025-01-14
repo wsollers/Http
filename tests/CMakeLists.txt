@@ -20,7 +20,8 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 
     add_test(NAME HttpTests COMMAND httptests)
 
-    add_executable(httptests httptests.cpp
+    add_executable(httptests httptests.cpp 
+            ../common/common.cpp ../common/http.cpp
             ../common/http.h ../common/include/ContentTypes.h ../common/include/HttpBase.h)
     target_include_directories(httptests PRIVATE ${CMAKE_BINARY_DIR}/libressl-install/include)
     target_include_directories(httptests PRIVATE ${CMAKE_BINARY_DIR}/googletest-install/include)

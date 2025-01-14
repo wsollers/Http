@@ -66,7 +66,11 @@ TEST(HttpTestSuite, InitialRequestHasZeroHeaders) {
 }
 
 
-// Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request1("http://example.com", 80);
+TEST(HttpTestSuite, CanAddHeader) {
+    using namespace Http;
+    Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);
+    EXPECT_EQ(request.getHeaderCount(), 1);
+}
 TEST(HttpTestSuite, CanAddHeaders) {
     using namespace Http;
     Http::Request<Http::Transport::HTTP, Http::Protocol::HTTP1_1, Http::Method::GET> request("http://example.com", 80);

@@ -5,12 +5,60 @@
 #ifndef HTTP_H
 #define HTTP_H
 
-#include "include/HttpBase.h"
 #include "include/ContentTypes.h"
+#include "include/HttpBase.h"
 #include "include/HttpHeaders.h"
 
 struct Hello {
   const char *value = "HELLO WORLD\n";
 };
+
+namespace Http {
+
+template <Http::Transport TransportType, Http::Protocol ProtocolType>
+struct Sender {
+  void sendRequest(const Http::Request &request) {
+    std::cout << "Sending request to ";
+    request.printRequest();
+    std::cout << std::endl;
+  }
+};
+
+template <>
+struct Sender<Http::Transport::TLS, Http::Protocol::HTTP1_1> {
+  void sendRequest(const Http::Request &request) {
+    //Encrypted HTTPS request
+    std::cout << "Sending request to ";
+    request.printRequest();
+    std::cout << " over TLS" << std::endl;
+  }
+};
+
+template <>
+struct Sender<Http::Transport::HTTP, Http::Protocol::HTTP1_1> {
+  void sendRequest(const Http::Request &request) {
+    //Unencrypted HTTP request
+    std::cout << "Sending request to ";
+    request.printRequest();
+    std::cout << " over HTTP" << std::endl;
+  }
+};
+
+class Client {
+public:
+  Client(Http::Transport transport, Http::Protocol protocol)
+      : transport(transport), protocol(protocol){};
+
+  virtual ~Client() = default;
+
+  void sendRequest(const std::string &url, const Http::Method method,
+                   const Http::Headers &headers, const std::string &body);
+
+private:
+  Http::Transport transport;
+  Http::Protocol protocol;
+};
+
+} // namespace Http
 
 #endif // HTTP_H
