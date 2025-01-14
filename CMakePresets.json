@@ -21,7 +21,7 @@
       "description": "Linux Debug configuration with tests",
       "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build/linux/debug-tests",
-      "cacheVariables": {
+      "cacheVariables":{
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_CXX_STANDARD": "23",
         "ENABLE_TESTS": "ON"
@@ -51,7 +51,7 @@
     {
       "name": "windows-debug",
       "description": "Windows Debug configuration",
-      "generator": "Visual Studio 16 2019",
+      "generator": "Visual Studio 17 2022",
       "binaryDir": "${sourceDir}/build/windows/debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
@@ -61,7 +61,7 @@
     {
       "name": "windows-debug-tests",
       "description": "Windows Debug configuration with tests",
-      "generator": "Visual Studio 16 2019",
+      "generator": "Visual Studio 17 2022",
       "binaryDir": "${sourceDir}/build/windows/debug-tests",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
@@ -72,9 +72,9 @@
     {
       "name": "windows-release",
       "description": "Windows Release configuration",
-      "generator": "Visual Studio 16 2019",
+      "generator": "Visual Studio 17 2022",
       "binaryDir": "${sourceDir}/build/windows/release",
-      "cacheVariables": {
+      "cacheVariables":{
         "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_CXX_STANDARD": "23"
       }
@@ -82,7 +82,7 @@
     {
       "name": "windows-release-tests",
       "description": "Windows Release configuration with tests",
-      "generator": "Visual Studio 16 2019",
+      "generator": "Visual Studio 17 2022",
       "binaryDir": "${sourceDir}/build/windows/release-tests",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
