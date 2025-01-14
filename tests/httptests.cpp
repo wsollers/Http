@@ -61,7 +61,7 @@ TEST(HttpTestSuite, HandlesAllKnownHeaders) {
 
 TEST(HttpTestSuite, InitialRequestHasZeroHeaders) {
     using namespace Http;
-    Http::Request request("http://example.com", 80);
+    Http::Request request(Http::Method::GET,"http://example.com", 80);
     EXPECT_EQ(request.getHeaderCount(), size_t(0));
 }
 
