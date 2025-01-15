@@ -27,6 +27,11 @@ if (ENABLE_SECURITY)
     if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=safe-stack -fsanitize=cfi")
     endif ()
+    # Turn off unused parameter for now
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=unused-parameter -Wno-error=unused-but-set-variable")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=unknown-pragmas -Wno-error=unused-parameter")
+    endif()
 
     # MSVC options
     if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
