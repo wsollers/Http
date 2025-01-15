@@ -26,8 +26,9 @@ int main (int argc, char *argv[]) {
 
     Http::Client client(Http::Transport::TLS, Http::Protocol::HTTP1_0); //Decide on transport and proto first
     const Http::Request request (Http::Method::GET, "cnn.com", 443);
-    client.sendRequest(request);;
+    Http::Response response = client.sendRequest(request);;
 
+    std::string_view cookie = response.getHeader(Http::HeaderKeys::Cookie);
 
     exit(EXIT_SUCCESS);
 

@@ -3,6 +3,31 @@ project(Http)
 
 set(CMAKE_CXX_STANDARD 23)
 
+# Common security flags for GCC and Clang
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -fstack-protector-strong -fPIE -D_FORTIFY_SOURCE=2 -fcf-protection=full")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pie -Wl,-z,relro -Wl,-z,now")
+endif()
+
+# Specific flags for GCC
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mindirect-branch=thunk -fstack-clash-protection")
+endif()
+
+# Specific flags for Clang
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=safe-stack -fsanitize=cfi")
+endif()
+
+# MSVC options
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    # Compiler flags
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /GS /sdl /analyze")
+
+    # Linker flags
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /guard:cf /DYNAMICBASE /NXCompat")
+endif()
+
 # Print out the current compiler
 message(STATUS "CMAKE_C_COMPILER: ${CMAKE_C_COMPILER}")
 message(STATUS "CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}")
@@ -127,14 +152,5 @@ endif ()
 #cmake -DENABLE_TESTS=OFF ..
 
 
-# Output the include directories
-message(STATUS "Include directories:")
-get_property(INCLUDE_DIRS DIRECTORY PROPERTY INCLUDE_DIRECTORIES)
-foreach (INCLUDE_DIR ${INCLUDE_DIRS})
-message(STATUS "${INCLUDE_DIR}")
-endforeach ()
-# Output the link directories message(STATUS "Link directories:")
-get_property(LINK_DIRS TARGET Http PROPERTY LINK_DIRECTORIES)
-foreach (LINK_DIR ${LINK_DIRS})
-message(STATUS)
-endforeach ()
+
+

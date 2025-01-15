@@ -7,7 +7,7 @@
 
 #include "include/ContentTypes.h"
 #include "include/HttpBase.h"
-#include "include/HttpHeaders.h"
+
 
 struct Hello {
   const char *value = "HELLO WORLD\n";
@@ -51,9 +51,9 @@ public:
 
   virtual ~Client() = default;
 
-  void sendRequest(const std::string &url, const Http::Method method,
+  Http::Response sendRequest(const std::string &url, const Http::Method method,
                    const Http::Headers &headers, const std::string &body);
-  void sendRequest(const Http::Request &request);
+  Http::Response sendRequest(const Http::Request &request);
 
 private:
   Http::Transport transport;
