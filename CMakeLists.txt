@@ -24,9 +24,11 @@ if (ENABLE_SECURITY)
     endif ()
 
     # Specific flags for Clang
-    if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=safe-stack -fsanitize=cfi")
-    endif ()
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+        # Enable CFI, LTO, and visibility settings
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=cfi -flto -fvisibility=hidden")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -flto")
+    endif()
     # Turn off unused parameter for now
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=unused-parameter -Wno-unused-but-set-variable")
@@ -43,6 +45,7 @@ if (ENABLE_SECURITY)
     endif ()
 
 endif ()
+
 # Print out the current compiler
 message(STATUS "CMAKE_C_COMPILER: ${CMAKE_C_COMPILER}")
 message(STATUS "CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}")
